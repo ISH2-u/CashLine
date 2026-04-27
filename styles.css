@@ -1,0 +1,107 @@
+body { 
+    font-family: 'Inter', sans-serif; 
+    overflow-x: hidden; 
+    transition: background-color 0.5s ease, color 0.5s ease; 
+}
+
+/* Base custom resets */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+.collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.collapsible-content.expanded { max-height: 800px; }
+
+/* 🌟 Status variables driving entire UI feel 🌟 */
+.status-safe { 
+    --status-color: #0d9488; /* Teal-600 */
+    --status-shadow: rgba(13, 148, 136, 0.15); 
+    --badge-bg: rgba(13, 148, 136, 0.1); 
+    --bloom-color: rgba(13, 148, 136, 0.15);
+}
+html.dark .status-safe { 
+    --status-color: #2dd4bf; /* Teal-400 */
+    --status-shadow: rgba(45, 212, 191, 0.3); 
+    --badge-bg: rgba(45, 212, 191, 0.15); 
+    --bloom-color: rgba(45, 212, 191, 0.1);
+}
+
+.status-warning { 
+    --status-color: #d97706; /* Amber-600 */
+    --status-shadow: rgba(217, 119, 6, 0.15); 
+    --badge-bg: rgba(217, 119, 6, 0.1); 
+    --bloom-color: rgba(217, 119, 6, 0.15);
+}
+html.dark .status-warning { 
+    --status-color: #fbbf24; /* Amber-400 */
+    --status-shadow: rgba(251, 191, 36, 0.3); 
+    --badge-bg: rgba(251, 191, 36, 0.15); 
+    --bloom-color: rgba(251, 191, 36, 0.1);
+}
+
+.status-danger { 
+    --status-color: #e11d48; /* Rose-600 */
+    --status-shadow: rgba(225, 29, 72, 0.15); 
+    --badge-bg: rgba(225, 29, 72, 0.1); 
+    --bloom-color: rgba(225, 29, 72, 0.15);
+}
+html.dark .status-danger { 
+    --status-color: #fb7185; /* Rose-400 */
+    --status-shadow: rgba(251, 113, 133, 0.4); 
+    --badge-bg: rgba(251, 113, 133, 0.15); 
+    --bloom-color: rgba(251, 113, 133, 0.1);
+}
+
+/* Glass & Glow Card Behaviors */
+.glow-card { 
+    transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease; 
+}
+.glow-card.active-status {
+    border-color: var(--status-color);
+    box-shadow: 0 10px 40px var(--status-shadow);
+}
+#bgBloom {
+    background: radial-gradient(circle, var(--bloom-color) 0%, transparent 70%);
+}
+.glow-card.active-status #bgBloom {
+    opacity: 1;
+}
+
+/* Colored text applications */
+#runwayNumber { color: var(--status-color); }
+#stateBadge { 
+    background-color: var(--badge-bg); 
+    color: var(--status-color); 
+    border-color: var(--status-color); 
+}
+#stateBadgeDot {
+    background-color: var(--status-color);
+}
+
+/* Heartbeat SVG Animation */
+.heartbeat-svg { width: 100%; height: 100%; }
+.heartbeat-path {
+    fill: transparent;
+    stroke: var(--status-color, #cbd5e1); /* slate-300 light mode idle */
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: dash 2.5s linear infinite;
+    transition: stroke 0.5s ease;
+}
+html.dark .heartbeat-path { stroke: var(--status-color, #333333); }
+
+/* Animation paces and glow */
+.anim-safe { animation-duration: 3.5s; filter: drop-shadow(0 0 6px var(--status-color)); }
+.anim-warning { animation-duration: 1.5s; filter: drop-shadow(0 0 8px var(--status-color)); }
+.anim-danger { animation-duration: 0.5s; filter: drop-shadow(0 0 10px var(--status-color)); stroke-width: 5; }
+.anim-idle { animation-duration: 4s; opacity: 0.3; filter: none; }
+
+@keyframes dash {
+    0% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 0; }
+}
+
+/* Smooth Fade In Sequence */
+.fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.fade-in-up.visible { opacity: 1; transform: translateY(0); }
